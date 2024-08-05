@@ -1,11 +1,11 @@
 extends Node
 
 #Definindo a velocidade
-@export var speed: float = 1.0
+@export var speedEnemy: float = 1.0
 
 #Armazenando o sprite de animação em uma variável
 var spriteEnemy: AnimatedSprite2D
-var enemy: Enemy
+var enemy: EnemyClass
 
 func _ready():
 	#pegando o node raiz (no caso é o PAWN)
@@ -24,7 +24,7 @@ func _physics_process(delta):
 	var moveEnemy = difference.normalized()
 	
 	#calculando a velocidade de movimento.
-	enemy.velocity = moveEnemy * speed * 100.0
+	enemy.velocity = moveEnemy * speedEnemy * 100.0
 	enemy.move_and_slide()
 	
 	# rotacionar o inimigo de acordo com a posição do player.
