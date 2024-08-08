@@ -87,9 +87,52 @@ func attack():
 func amountSwordDamage():
 	# get_tree = obtem a arvore de nodes
 	# get_node_in_group = obtem nodes do mesmo grupo.
+	
 	#var enemies = get_tree().get_nodes_in_group("enemies")
 	var bodyEnemy = swordArea.get_overlapping_bodies()
 	for body in bodyEnemy:
 		if body.is_in_group("enemies"):
+			
+			# Armazenar a classe de inimigos e nomear-los como body
 			var enemy: EnemyClass = body
-			enemy.damage(swordDamage)
+			
+			# Calcular a direção do inimigo em relação ao player
+			var directionEnemy = (body.position - position).normalized()
+			var directionAttack: Vector2
+			
+			# Pega a direção que está atacando
+			if direction.y < 0:
+				directionAttack = Vector2.UP
+			elif direction.y > 0:
+				directionAttack = Vector2.DOWN
+			else:
+				if playerSprite.flip_h:
+					directionAttack = Vector2.LEFT
+				else:
+					directionAttack = Vector2.RIGHT
+
+			# Calcular o produto escalar (dot product) entre a direção do inimigo e a direção do ataque
+			var dotProduct = directionEnemy.dot(directionAttack)
+			print("Dot: ", dotProduct)
+
+			# Verificar se o ataque está na direção correta e dentro do intervalo esperado do produto escalar
+			if directionAttack == Vector2.UP:
+				# Para ataques para cima, dotProduct deve estar entre 0.5 e 1.0
+				# Não funcional
+				if dotProduct >= 0.5:
+					body.damage(swordDamage)
+					
+			elif directionAttack == Vector2.DOWN:
+				# Para ataques para baixo, dotProduct deve estar entre 0.5 e 1.0
+				if dotProduct >= 0.5:
+					body.damage(swordDamage)
+					
+			elif directionAttack == Vector2.LEFT:
+				# Para ataques para a esquerda, dotProduct deve estar entre 0.5 e 1.0
+				if dotProduct >= 0.5:
+					body.damage(swordDamage)
+					
+			elif directionAttack == Vector2.RIGHT:
+				# Para ataques para a direita, dotProduct deve estar entre 0.5 e 1.0
+				if dotProduct >= 0.5:
+					body.damage(swordDamage)
